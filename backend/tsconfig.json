@@ -1,6 +1,8 @@
 {
     "compilerOptions": {
+        "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
         "module": "commonjs",
         "declaration": false,
         "noImplicitAny": false,
