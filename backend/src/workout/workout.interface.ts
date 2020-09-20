@@ -15,7 +15,9 @@ export enum Category {
     c7 = 'c7',
 }
 
+export type PaginationQuery = { limit: number; offset: number };
+
 // Service definitions
 export interface FindAll {
-    (pageniate: { limit: number; offset: number }): Promise<Array<Workout>>;
+    (pageniate: PaginationQuery): Promise<Array<Workout>>;
 }
