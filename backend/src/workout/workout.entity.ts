@@ -4,7 +4,7 @@ import { Category, Workout } from './workout.interface';
 @Entity('workout')
 export class WorkoutEntity implements Workout {
     @ObjectIdColumn()
-    id: ObjectID;
+    _id: ObjectID;
 
     @Column()
     name: string;

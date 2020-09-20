@@ -2,9 +2,11 @@ import {
     Controller,
     DefaultValuePipe,
     Get,
+    Param,
     ParseIntPipe,
     Query,
 } from '@nestjs/common';
+import { ObjectID } from 'typeorm';
 import { Workout } from './workout.interface';
 import { WorkoutService } from './workout.service';
 
@@ -19,8 +21,15 @@ export class WorkoutController {
         @Query('offset', new DefaultValuePipe(0), ParseIntPipe)
         offset: number
     ): Promise<Array<Workout>> {
-        console.log(typeof limit, limit, typeof offset, offset);
         if (limit > 100) limit = 100;
-        return this.workoutService.findAll({ limit, offset });
+        return await this.workoutService.findAll({ limit, offset });
+    }
+
+    @Get(':id')
+    async getWorkout(
+        @Param('id')
+        id: ObjectID
+    ): Promise<Workout> {
+        return await this.workoutService.findOne(id);
     }
 }
