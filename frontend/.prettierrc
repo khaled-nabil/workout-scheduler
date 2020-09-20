@@ -1,0 +1,10 @@
+{
+    "newline-before-return": true,
+    "no-duplicate-variable": [true, "check-parameters"],
+    "no-var-keyword": true,
+    "printWidth": 80,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "all"
+  }
+  
