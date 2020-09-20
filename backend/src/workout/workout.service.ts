@@ -1,24 +1,21 @@
 import { Injectable } from '@nestjs/common';
-import { Workout } from './workout.interface';
+import { InjectRepository } from '@nestjs/typeorm';
+import { MongoRepository } from 'typeorm';
+import { WorkoutEntity } from './workout.entity';
+import { FindAll } from './workout.interface';
 
 @Injectable()
 export class WorkoutService {
-    private readonly workout: Array<Workout> = [
-        {
-            name: 'workout A',
-            description: 'description of A',
-            startDate: new Date(),
-            category: 'c1',
-        },
-        {
-            name: 'workout B',
-            description: 'description of B',
-            startDate: new Date(),
-            category: 'c2',
-        },
-    ];
+    constructor(
+        @InjectRepository(WorkoutEntity)
+        private readonly workoutRepository: MongoRepository<WorkoutEntity>
+    ) {}
+    findAll: FindAll = async ({ limit, offset }) => {
+        const workouts = await this.workoutRepository.find({
+            skip: offset,
+            take: limit,
+        });
 
-    findAll(): Array<Workout> {
-        return this.workout;
-    }
+        return workouts;
+    };
 }

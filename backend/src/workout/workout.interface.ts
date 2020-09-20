@@ -14,3 +14,8 @@ export enum Category {
     c6 = 'c6',
     c7 = 'c7',
 }
+
+// Service definitions
+export interface FindAll {
+    (pageniate: { limit: number; offset: number }): Promise<Array<Workout>>;
+}
