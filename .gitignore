@@ -1,8 +1,9 @@
 # Dependency directories
 node_modules/
 
-# dotenv environment variables file
+# dotenv environment variables file & config files
 .env
+ormconfig.json
 
 # Build files
 build/
