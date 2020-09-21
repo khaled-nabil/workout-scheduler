@@ -3,11 +3,13 @@ import { MainLayout } from 'views/templates';
 import { Row } from 'views/molecules';
 import useWorkout from './Workouts.hook';
 import { Box, Paragraph, Image } from 'views/atoms';
+import { Input } from 'views/atoms';
 
 const Workouts: React.FC = () => {
   const { workouts } = useWorkout();
   return (
     <MainLayout>
+      <Input type="date" />
       <Row px={[3, null, 1]}>
         {workouts?.map((workout, i) => (
           <Box width={1 / 5} key={i}>
