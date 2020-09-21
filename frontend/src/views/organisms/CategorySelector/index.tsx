@@ -1,13 +1,20 @@
 import React, { FC } from 'react';
-import { Row } from 'views/molecules';
-import { Image } from 'views/atoms';
-import Logo from 'assets/logo.png';
+import { Box } from 'views/atoms';
+import { Checkbox, Row } from 'views/molecules';
+import useCategories from './CategorySelector.hook';
 
-const Header: FC = ({ children }) => (
-  <Row justifyContent="center" py={5}>
-    <Image src={Logo} alt="logo" />
-    {children}
-  </Row>
-);
+const CategorySelector: FC = () => {
+  const { categories } = useCategories();
 
-export default Header;
+  return (
+    <>
+      {categories?.map((category, i) => (
+        <Box key={i} display="flex">
+          <Checkbox label={category.name} name="category[]" p={3} mx={2} />
+        </Box>
+      ))}
+    </>
+  );
+};
+
+export default CategorySelector;

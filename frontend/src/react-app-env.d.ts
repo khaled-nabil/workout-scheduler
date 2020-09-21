@@ -8,5 +8,6 @@ declare module 'styled-components' {
     colors: Record<string, any>;
     fontFamily: Record<string, string>;
     fontSizes: Record<string, string>;
+    breakpoints: Array<string>;
   }
 }

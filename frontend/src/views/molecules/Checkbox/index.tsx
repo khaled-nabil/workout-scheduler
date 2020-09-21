@@ -8,14 +8,15 @@ const Checkbox: FC<CheckboxMolecule> = ({ label, children, ...props }) => {
   const handleChange = () => {
     setChecked((state) => !state);
   };
+  const { p, mx, ...otherProps } = props;
   return (
-    <Label variant={checked}>
+    <Label variant={checked} p={p} mx={mx}>
       <Input
         display="none"
         type="checkbox"
         defaultChecked={checked}
         onClick={handleChange}
-        {...props}
+        {...otherProps}
       >
         {children}
       </Input>
