@@ -1,10 +1,18 @@
 version: "3.3"
 services:
+  backend:
+    build:
+      context: ./backend
+    container_name: workout-backend
+    ports:
+      - '5000:5000'
+    depends_on:
+      - mongodb
   mongodb:
     image: mongo:latest
     environment:
       MONGO_INITDB_DATABASE: workout-scheduler
-      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_USERNAME: app-consumer
       MONGO_INITDB_ROOT_PASSWORD: pass
     ports:
       - 27017:27017
