@@ -1,5 +1,9 @@
-import colors from "./colors";
+import { DefaultTheme } from 'styled-components';
+import colors from './colors';
+import spacing from './spacing';
 
-export default {
-  ...colors
+const defaultTheme: DefaultTheme = {
+  ...colors,
+  ...spacing,
 };
+export default defaultTheme;
