@@ -1,11 +1,11 @@
-import React, { ReactElement, memo } from 'react';
+import React from 'react';
 import { Header } from 'views/organisms';
 
-const MainLayout = ({ children }: { children: ReactElement }): ReactElement => (
+const MainLayout: React.FC = ({ children }) => (
   <>
     <Header />
     {children}
   </>
 );
 
-export default memo(MainLayout);
+export default MainLayout;
