@@ -1,9 +1,11 @@
 import React from 'react';
 import { MainLayout } from 'views/templates';
+import { Row } from 'views/molecules';
+
 function NotFound() {
   return (
     <MainLayout>
-      <div className="App">Page not found</div>
+      <Row>Page not found</Row>
     </MainLayout>
   );
 }
