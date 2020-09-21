@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ObjectID } from 'typeorm';
+import { Category } from '../categories/category.interface';
 import { Workout } from './workout.interface';
 import { WorkoutService } from './workout.service';
 
@@ -20,6 +21,8 @@ export class WorkoutController {
         parameters: [
             { name: 'limit', in: 'query' },
             { name: 'offset', in: 'query' },
+            { name: 'startDate', in: 'query' },
+            { name: 'category', in: 'query' },
         ],
     })
     @ApiResponse({ status: 200, description: 'Return workouts.' })
@@ -29,13 +32,20 @@ export class WorkoutController {
     })
     @Get()
     async getWorkouts(
-        @Query('limit', new DefaultValuePipe(10), ParseIntPipe)
+        @Query('limit', new DefaultValuePipe(20), ParseIntPipe)
         limit: number,
         @Query('offset', new DefaultValuePipe(0), ParseIntPipe)
-        offset: number
+        offset: number,
+        @Query('startDate')
+        startDate: Date,
+        @Query('category')
+        category: Category
     ): Promise<Array<Workout>> {
-        if (limit > 100) limit = 100;
-        return await this.workoutService.findAll({ limit, offset });
+        if (limit > 20) limit = 20;
+        return await this.workoutService.findAll(
+            { limit, offset },
+            { category, startDate }
+        );
     }
 
     @ApiOperation({

@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { MongoRepository, ObjectID } from 'typeorm';
 import { Category } from '../categories/category.interface';
 import { WorkoutEntity } from './workout.entity';
-import { FindAll, Workout } from './workout.interface';
+import { FindAll, FindAllWhereQuery, Workout } from './workout.interface';
 
 @Injectable()
 export class WorkoutService {
@@ -11,10 +11,16 @@ export class WorkoutService {
         @InjectRepository(WorkoutEntity)
         private readonly workoutRepository: MongoRepository<WorkoutEntity>
     ) {}
-    findAll: FindAll = async ({ limit, offset }) => {
+    findAll: FindAll = async ({ limit, offset }, { startDate, category }) => {
+        const where: FindAllWhereQuery = {};
+
+        if (startDate) where.startDate = { $gte: new Date(startDate) };
+        if (category) where.category = category;
         const workouts = await this.workoutRepository.find({
             skip: offset,
             take: limit,
+            where: where,
+            order: { startDate: 'ASC' },
         });
 
         return workouts;

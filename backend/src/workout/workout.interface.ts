@@ -10,7 +10,14 @@ export interface Workout {
 
 export type PaginationQuery = { limit: number; offset: number };
 
+export type FilterQuery = { startDate?: Date; category?: Category };
+
 // Service definitions
 export interface FindAll {
-    (pageniate: PaginationQuery): Promise<Array<Workout>>;
+    (pageniate: PaginationQuery, filter?: FilterQuery): Promise<Array<Workout>>;
+}
+
+export interface FindAllWhereQuery {
+    startDate?: { $gte: Date };
+    category?: Category;
 }
