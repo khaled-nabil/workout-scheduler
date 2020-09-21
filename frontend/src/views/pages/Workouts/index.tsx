@@ -23,6 +23,7 @@ const Workouts: React.FC = () => {
           name="startDate"
           ml={2}
         />
+        <Checkbox label="End Date" name="category[]" />
       </Box>
       <Row px={[3, null, 1]}>
         {workouts?.map((workout, i) => (
