@@ -3,12 +3,25 @@ import {
   BorderProps,
   BoxShadowProps,
   ColorProps,
+  LayoutProps,
 } from 'styled-system';
 
-export interface InputAtom
+export interface InputAtomBase
   extends SpaceProps,
     BorderProps,
     BoxShadowProps,
-    ColorProps {
+    ColorProps,
+    LayoutProps {
   type?: string;
+  name: string;
+  id?: string;
+  defaultChecked?: boolean;
+}
+
+export interface StyledInputAtom extends Partial<InputAtomBase> {}
+
+export interface InputAtom extends InputAtomBase {
+  onClick?: (e: Event) => void;
+  max?: string;
+  value?: string;
 }
