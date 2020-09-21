@@ -3,6 +3,7 @@ export interface Workout {
     description: string;
     startDate: Date;
     category: string;
+    picture: string;
 }
 
 export enum Category {
