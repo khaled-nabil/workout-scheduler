@@ -37,6 +37,7 @@ export class WorkoutController {
         if (limit > 100) limit = 100;
         return await this.workoutService.findAll({ limit, offset });
     }
+
     @ApiOperation({
         summary: 'Get single workout by id',
         parameters: [{ name: 'id', in: 'path' }],

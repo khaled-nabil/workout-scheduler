@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MongoRepository, ObjectID } from 'typeorm';
+import { Category } from '../categories/category.interface';
 import { WorkoutEntity } from './workout.entity';
 import { FindAll, Workout } from './workout.interface';
 
@@ -20,10 +21,12 @@ export class WorkoutService {
     };
 
     async findOne(id: ObjectID): Promise<Workout> {
-        const workout = await this.workoutRepository.findOne({
-            where: { _id: id },
-        });
+        const workout = await this.workoutRepository.findOne(id);
 
         return workout;
+    }
+
+    allCategories(): Array<Category> {
+        return Object.values(Category);
     }
 }

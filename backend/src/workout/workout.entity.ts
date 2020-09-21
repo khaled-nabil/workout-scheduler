@@ -1,5 +1,6 @@
 import { Entity, Column, ObjectID, ObjectIdColumn } from 'typeorm';
-import { Category, Workout } from './workout.interface';
+import { Category } from '../categories/category.interface';
+import { Workout } from './workout.interface';
 
 @Entity('workout')
 export class WorkoutEntity implements Workout {
