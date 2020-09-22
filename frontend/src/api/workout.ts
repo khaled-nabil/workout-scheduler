@@ -7,6 +7,10 @@ interface GetWorkoutsParams {
   page?: number;
 }
 
+interface GetWorkoutParams {
+  id: string;
+}
+
 interface APIParams {
   startDate?: string;
   category: string[];
@@ -40,4 +44,10 @@ const getWorkouts = async ({
   return data;
 };
 
-export { getWorkouts };
+const getWorkout = async ({ id }: GetWorkoutParams): Promise<Workout> => {
+  const { data } = await AxiosClient.get<Workout>(`/workout/${id}`);
+
+  return data;
+};
+
+export { getWorkouts, getWorkout };
