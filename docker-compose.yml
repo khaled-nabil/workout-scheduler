@@ -1,13 +1,5 @@
 version: "3.3"
 services:
-  backend:
-    build:
-      context: ./backend
-    container_name: workout-backend
-    ports:
-      - '5000:5000'
-    depends_on:
-      - mongodb
   mongodb:
     image: mongo:latest
     environment:
@@ -21,8 +13,29 @@ services:
       - ./data/fixtures:/fixtures
       - ./data/mongo_import.sh:/docker-entrypoint-initdb.d/mongo_import.sh
       - ./data/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-
+  backend:
+    build:
+      context: ./backend
+    container_name: workout-backend
+    ports:
+      - '5000:5000'
+    depends_on:
+      - mongodb
+  frontend:
+    stdin_open: true
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - node_modules:/app/node_modules
+      - ./frontend:/app
+    depends_on:
+      - backend
 
 volumes:
   mongodb_data:
     driver: local
+  node_modules:
+
