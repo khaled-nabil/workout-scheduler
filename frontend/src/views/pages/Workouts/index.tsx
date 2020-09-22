@@ -2,10 +2,10 @@ import React from 'react';
 import { MainLayout } from 'views/templates';
 import { Row } from 'views/molecules';
 import useWorkout from './Workouts.hook';
-import { Box, Paragraph, Image } from 'views/atoms';
+import { Box } from 'views/atoms';
 import { InputField } from 'views/molecules';
 import moment from 'moment';
-import { CategorySelector } from 'views/organisms';
+import { CategorySelector, WorkoutCards } from 'views/organisms';
 import { startDateContext } from 'state/Filters.context';
 import { useFilters } from 'state/Context.hook';
 
@@ -13,10 +13,10 @@ const yearLaterDate = moment().add(1, 'years').format('YYYY-MM-DD');
 const currentDate = moment().format('YYYY-MM-DD');
 
 const Workouts: React.FC = () => {
-  const { workouts } = useWorkout();
-  const startDate = useFilters();
+  const { workouts, loading, onDateChange } = useWorkout();
+  const filters = useFilters();
   return (
-    <startDateContext.Provider value={startDate}>
+    <startDateContext.Provider value={filters}>
       <MainLayout>
         {/* TODO: Add internationalization value */}
         <Row
@@ -31,6 +31,7 @@ const Workouts: React.FC = () => {
               label="Start Date"
               type="date"
               name="startDate"
+              onChange={onDateChange}
               ml={2}
             />
           </Box>
@@ -39,15 +40,7 @@ const Workouts: React.FC = () => {
           </Row>
         </Row>
         <Row px={[3, null, 1]}>
-          {workouts?.map((workout, i) => (
-            <Box width={[1 / 2, 1 / 3, 1 / 5]} key={i}>
-              <Image src={workout.picture} />
-              <Paragraph>{workout.name}</Paragraph>
-              <Paragraph>
-                {moment(workout.startDate).format('YYYY-MM-DD')}
-              </Paragraph>
-            </Box>
-          ))}
+          {!loading && workouts && <WorkoutCards workouts={workouts} />}
         </Row>
       </MainLayout>
     </startDateContext.Provider>
