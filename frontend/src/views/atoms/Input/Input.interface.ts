@@ -22,6 +22,7 @@ export interface StyledInputAtom extends Partial<InputAtomBase> {}
 
 export interface InputAtom extends InputAtomBase {
   onClick?: (e: Event) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   max?: string;
-  value?: string;
+  defaultValue?: string;
 }

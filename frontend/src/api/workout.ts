@@ -1,8 +1,20 @@
 import AxiosClient from './client';
 import { Workout } from '../types/workout';
 
-const getWorkouts = async (): Promise<Array<Workout>> => {
-  const { data } = await AxiosClient.get<Array<Workout>>('/workout');
+interface GetWorkoutsParams {
+  startDate?: string;
+}
+
+const getWorkouts = async ({
+  startDate,
+}: GetWorkoutsParams): Promise<Array<Workout>> => {
+  const params: GetWorkoutsParams = {};
+  if (startDate) params.startDate = startDate;
+  const { data } = await AxiosClient.get<Array<Workout>>('/workout', {
+    params: {
+      ...params,
+    },
+  });
 
   return data;
 };

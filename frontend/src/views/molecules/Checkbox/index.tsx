@@ -3,9 +3,15 @@ import { Input } from 'views/atoms';
 import { CheckboxMolecule } from './Checkbox.interface';
 import { Label } from 'views/atoms';
 
-const Checkbox: FC<CheckboxMolecule> = ({ label, children, ...props }) => {
-  const [checked, setChecked] = useState(false);
-  const handleChange = () => {
+const Checkbox: FC<CheckboxMolecule> = ({
+  label,
+  onChange,
+  children,
+  ticked = false,
+  ...props
+}) => {
+  const [checked, setChecked] = useState(ticked);
+  const handleClick = () => {
     setChecked((state) => !state);
   };
   const { p, mx, ...otherProps } = props;
@@ -15,7 +21,8 @@ const Checkbox: FC<CheckboxMolecule> = ({ label, children, ...props }) => {
         display="none"
         type="checkbox"
         defaultChecked={checked}
-        onClick={handleChange}
+        onClick={handleClick}
+        onChange={onChange}
         {...otherProps}
       >
         {children}
