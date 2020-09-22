@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In, MongoRepository, ObjectID } from 'typeorm';
+import { MongoRepository, ObjectID } from 'typeorm';
 import { Category } from '../categories/category.interface';
 import { WorkoutEntity } from './workout.entity';
 import { FindAll, FindAllWhereQuery, Workout } from './workout.interface';
@@ -20,7 +20,7 @@ export class WorkoutService {
             skip: offset,
             take: limit,
             where: where,
-            order: { startDate: 'ASC' },
+            order: { startDate: 'ASC', _id: 'ASC' },
         });
 
         return workouts;

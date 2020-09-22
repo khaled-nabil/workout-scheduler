@@ -6,7 +6,8 @@ const NotFound = lazy(() => import('views/pages/NotFound'));
 
 const PublicRoutes = (): ReactElement => (
   <Switch>
-    <Route exact path="/" component={Workouts} />
+    <Route exact path={['/workouts', '/']} component={Workouts} />
+    <Route exact path="/workouts/:page" component={Workouts} />
     <Route component={NotFound} />
   </Switch>
 );

@@ -3,6 +3,9 @@ import { getWorkouts } from 'api/workout';
 import { Workout } from 'types/workout';
 import { filterContext } from 'state/Filters.context';
 import moment from 'moment';
+import { useParams } from 'react-router-dom';
+
+export type WorkoutsParams = { page?: string };
 
 const useWorkouts = () => {
   const [workouts, setWorkouts] = useState<Array<Workout>>();
@@ -11,6 +14,8 @@ const useWorkouts = () => {
   const { startDate, setCurrentStartDate, categories } = useContext(
     filterContext,
   );
+  const { page = '1' } = useParams<WorkoutsParams>();
+
   useMemo(() => {
     const fetch = async () => {
       if (categories) {
@@ -20,6 +25,7 @@ const useWorkouts = () => {
             await getWorkouts({
               startDate: startDate,
               category: categories.filter((c) => c.enabled).map((c) => c.name),
+              page: parseInt(page),
             }),
           );
           setLoading(false);
@@ -30,7 +36,7 @@ const useWorkouts = () => {
       }
     };
     fetch();
-  }, [startDate, categories]);
+  }, [page, startDate, categories]);
 
   const onDateChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setCurrentStartDate(moment(e.target.value).format('YYYY-MM-DD'));
