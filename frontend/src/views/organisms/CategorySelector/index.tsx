@@ -4,10 +4,7 @@ import { Checkbox } from 'views/molecules';
 import useCategories from './CategorySelector.hook';
 
 const CategorySelector: FC = () => {
-  const { categories } = useCategories();
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    console.log(e.target.value, e.target.checked);
-  };
+  const { categories, onChange } = useCategories();
   return (
     <>
       {categories?.map((category, i) => (
