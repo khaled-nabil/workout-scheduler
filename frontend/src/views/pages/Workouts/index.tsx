@@ -5,7 +5,7 @@ import useWorkout from './Workouts.hook';
 import { Box } from 'views/atoms';
 import { InputField } from 'views/molecules';
 import moment from 'moment';
-import { CategorySelector, WorkoutCards } from 'views/organisms';
+import { CategorySelector, Pagination, WorkoutCards } from 'views/organisms';
 
 const yearLaterDate = moment().add(1, 'years').format('YYYY-MM-DD');
 const currentDate = moment().format('YYYY-MM-DD');
@@ -37,6 +37,9 @@ const Workouts: React.FC = () => {
       </Row>
       <Row px={[3, null, 1]}>
         {!loading && workouts && <WorkoutCards workouts={workouts} />}
+      </Row>
+      <Row justifyContent="center" mb={5} mt={3}>
+        <Pagination />
       </Row>
     </MainLayout>
   );
