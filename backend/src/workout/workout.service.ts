@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MongoRepository, ObjectID } from 'typeorm';
+import { In, MongoRepository, ObjectID } from 'typeorm';
 import { Category } from '../categories/category.interface';
 import { WorkoutEntity } from './workout.entity';
 import { FindAll, FindAllWhereQuery, Workout } from './workout.interface';
@@ -15,7 +15,7 @@ export class WorkoutService {
         const where: FindAllWhereQuery = {};
 
         if (startDate) where.startDate = { $gte: new Date(startDate) };
-        if (category) where.category = category;
+        if (category) where.category = { $in: category };
         const workouts = await this.workoutRepository.find({
             skip: offset,
             take: limit,

@@ -22,7 +22,7 @@ export class WorkoutController {
             { name: 'limit', in: 'query' },
             { name: 'offset', in: 'query' },
             { name: 'startDate', in: 'query' },
-            { name: 'category', in: 'query' },
+            { name: 'category[]', in: 'query' },
         ],
     })
     @ApiResponse({ status: 200, description: 'Return workouts.' })
@@ -39,7 +39,7 @@ export class WorkoutController {
         @Query('startDate')
         startDate: Date,
         @Query('category')
-        category: Category
+        category: Array<Category>
     ): Promise<Array<Workout>> {
         if (limit > 20) limit = 20;
         return await this.workoutService.findAll(

@@ -1,4 +1,5 @@
 import { Category } from '../categories/category.interface';
+import { FindOperator } from 'typeorm';
 
 export interface Workout {
     name: string;
@@ -10,7 +11,7 @@ export interface Workout {
 
 export type PaginationQuery = { limit: number; offset: number };
 
-export type FilterQuery = { startDate?: Date; category?: Category };
+export type FilterQuery = { startDate?: Date; category?: Array<Category> };
 
 // Service definitions
 export interface FindAll {
@@ -19,5 +20,5 @@ export interface FindAll {
 
 export interface FindAllWhereQuery {
     startDate?: { $gte: Date };
-    category?: Category;
+    category?: { $in: Array<Category> };
 }
