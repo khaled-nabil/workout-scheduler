@@ -41,14 +41,14 @@ const Pagination: FC = () => {
           {'< Previous'}
         </PaginateLink>
       )}
-      {prvArray.map((pageNumber) => (
-        <PaginateLink href={`/workouts/${pageNumber}`}>
+      {prvArray.map((pageNumber, i) => (
+        <PaginateLink key={i} href={`/workouts/${pageNumber}`}>
           {pageNumber}
         </PaginateLink>
       ))}
       <PaginateBox>{currentPage}</PaginateBox>
-      {nextArray.map((pageNumber) => (
-        <PaginateLink href={`/workouts/${pageNumber}`}>
+      {nextArray.map((pageNumber, i) => (
+        <PaginateLink key={i} href={`/workouts/${pageNumber}`}>
           {pageNumber}
         </PaginateLink>
       ))}
