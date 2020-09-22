@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`atom / Box Renders in containment with default props 1`] = `
+<styled.div>
+  <span>
+    Contained Span
+  </span>
+</styled.div>
+`;
+
+exports[`atom / Box Renders with custom values when props passed 1`] = `
+<styled.div
+  className="class-name"
+  flex={1}
+>
+  <span>
+    Contained Span
+  </span>
+</styled.div>
+`;

@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Workout Should display only back button when no workout passed 1`] = `
+<MainLayout>
+  <Row
+    mb={3}
+    mx="auto"
+    px="4"
+    width={
+      Array [
+        1,
+        null,
+        0.75,
+        0.5,
+      ]
+    }
+  >
+    <Styled(Link)
+      href="/"
+    >
+      &lt; All Workouts
+    </Styled(Link)>
+  </Row>
+</MainLayout>
+`;
+
+exports[`Workout Should display workout details when workout date exists 1`] = `
+<MainLayout>
+  <Row
+    mb={3}
+    mx="auto"
+    px="4"
+    width={
+      Array [
+        1,
+        null,
+        0.75,
+        0.5,
+      ]
+    }
+  >
+    <Styled(Link)
+      href="/"
+    >
+      &lt; All Workouts
+    </Styled(Link)>
+  </Row>
+  <Row
+    mx="auto"
+    px="4"
+    width={
+      Array [
+        1,
+        null,
+        0.75,
+        0.5,
+      ]
+    }
+  >
+    <Box
+      width={
+        Array [
+          1,
+          null,
+          0.25,
+        ]
+      }
+    >
+      <Image
+        alt="elit Lorem amet"
+        src="http://placehold.it/200x200"
+      />
+    </Box>
+    <Box
+      pl="4"
+    >
+      <Paragraph>
+        elit Lorem amet
+      </Paragraph>
+      <Paragraph>
+        Eu laborum duis reprehenderit minim.
+      </Paragraph>
+      <Paragraph>
+        c1
+      </Paragraph>
+      <Paragraph>
+        2020-09-22
+      </Paragraph>
+    </Box>
+  </Row>
+</MainLayout>
+`;
