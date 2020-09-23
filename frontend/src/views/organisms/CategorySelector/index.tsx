@@ -1,10 +1,17 @@
-import React, { FC } from 'react';
+import React, { FC, forwardRef } from 'react';
 import { Box } from 'views/atoms';
 import { Checkbox } from 'views/molecules';
 import useCategories from './CategorySelector.hook';
 
-const CategorySelector: FC = () => {
-  const { categories, onChange } = useCategories();
+interface CategorySelectorParam {
+  ref?:
+    | ((instance: HTMLInputElement | null) => void)
+    | React.RefObject<HTMLInputElement>
+    | null
+}
+
+const CategorySelector: FC<CategorySelectorParam> = forwardRef((_, ref) => {
+  const { categories } = useCategories();
   return (
     <>
       {categories?.map((category, i) => (
@@ -12,9 +19,8 @@ const CategorySelector: FC = () => {
           <Checkbox
             defaultValue={category.name}
             label={category.name}
-            onChange={onChange}
-            ticked={true}
-            name="category[]"
+            ref={ref}
+            name={`cat-${category.name}`}
             p={3}
             mx={2}
           />
@@ -22,6 +28,6 @@ const CategorySelector: FC = () => {
       ))}
     </>
   );
-};
+});
 
 export default CategorySelector;
