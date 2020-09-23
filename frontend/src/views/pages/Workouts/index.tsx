@@ -16,7 +16,7 @@ const Workouts: React.FC = () => {
   return (
     <MainLayout>
       {/* TODO: Add internationalization value */}
-      <form onSubmit={filterSubmit}>
+      <form>
         <Row
           mx={[2, null, null, null, 'auto']}
           mb={3}
@@ -30,13 +30,13 @@ const Workouts: React.FC = () => {
               type="date"
               name="startDate"
               ref={register}
+              onChange={filterSubmit}
               ml={2}
             />
           </Box>
           <Row ml={'auto'}>
-            <CategorySelector ref={register} />
+            <CategorySelector ref={register} submit={filterSubmit} />
           </Row>
-          <input type="submit" />
         </Row>
       </form>
 

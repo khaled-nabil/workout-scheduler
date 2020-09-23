@@ -12,13 +12,11 @@ const LabelClickable = styled(Label)(
 );
 
 const Checkbox: FC<CheckboxMolecule> = forwardRef(
-  (
-    { label, p, mx, defaultChecked, ...props },
-    ref,
-  ) => {
+  ({ label, p, mx, defaultChecked, submit, ...props }, ref) => {
     const [checked, setChecked] = useState(defaultChecked);
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setChecked(event.target.checked);
+      if (submit) submit();
     };
     return (
       <LabelClickable variant={checked} p={p} mx={mx}>
