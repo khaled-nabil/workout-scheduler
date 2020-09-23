@@ -1,44 +1,46 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { getWorkouts } from 'api/workout';
 import { Workout } from 'types/workout';
-import { filterContext } from 'state/Filters.context';
 import { useParams } from 'react-router-dom';
-import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect';
+import { useForm } from 'react-hook-form';
+import { Category } from 'types/category';
 
 export type WorkoutsParams = { page?: string };
+interface FilterFormData {
+  startDate: string;
+  categories: Array<Category>;
+}
 
 const useWorkouts = () => {
+  const { register, handleSubmit } = useForm();
   const [workouts, setWorkouts] = useState<Array<Workout>>();
-  const [loading, setLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
-  const { startDate, categories } = useContext(
-    filterContext,
-  );
   const { page = '1' } = useParams<WorkoutsParams>();
 
-  useDeepCompareEffectNoCheck(() => {
-    const fetch = async () => {
-      if (categories?.length) {
-        try {
-          setLoading(true);
-          setWorkouts(
-            await getWorkouts({
-              startDate: startDate,
-              category: categories.filter((c) => c.enabled).map((c) => c.name),
-              page: parseInt(page),
-            }),
-          );
-          setLoading(false);
-        } catch (error) {
-          setHasError(true);
-          setLoading(false);
-        }
-      }
-    };
-    fetch();
-  }, [page, startDate, categories]);
+  const fetchNewData = async ({ startDate, categories }: FilterFormData) => {
+    setWorkouts(
+      await getWorkouts({
+        startDate: startDate,
+        category: categories,
+        page: parseInt(page),
+      }),
+    );
+  };
 
-  return { workouts, loading, hasError };
+  const onSubmit = (data: FilterFormData) => {
+    fetchNewData(data);
+  };
+
+  /* useEffect(() => {
+    (async () => {
+          setWorkouts(
+            await fetchNewData()
+          );
+      })()
+    };
+  }, [page]); */
+  const filterSubmit = handleSubmit<FilterFormData>(onSubmit);
+
+  return { workouts, register, filterSubmit };
 };
 
 export default useWorkouts;
