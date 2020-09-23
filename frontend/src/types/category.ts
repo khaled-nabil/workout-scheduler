@@ -11,7 +11,3 @@ export enum CategoryEnum {
 export interface Category {
   name: CategoryEnum;
 }
-
-export interface CategoryUI extends Category {
-  enabled: boolean;
-}

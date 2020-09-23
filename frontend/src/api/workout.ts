@@ -1,9 +1,10 @@
 import AxiosClient from './client';
 import { Workout } from '../types/workout';
+import { Category } from 'types/category';
 
 interface GetWorkoutsParams {
   startDate?: string;
-  category: string[];
+  category: Category[];
   page?: number;
 }
 
@@ -13,7 +14,7 @@ interface GetWorkoutParams {
 
 interface APIParams {
   startDate?: string;
-  category: string[];
+  category: Category[];
   offset: number;
   limit: number;
 }
@@ -25,7 +26,7 @@ const getWorkouts = async ({
   category,
   page = 1,
 }: GetWorkoutsParams): Promise<Array<Workout>> => {
-  if (!category.length) {
+  if (!category?.length) {
     return [];
   }
   if (page <= 0) page = 1;

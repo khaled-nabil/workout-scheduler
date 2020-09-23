@@ -1,48 +1,45 @@
-import { useState, useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { getWorkouts } from 'api/workout';
 import { Workout } from 'types/workout';
-import { filterContext } from 'state/Filters.context';
-import moment from 'moment';
 import { useParams } from 'react-router-dom';
-import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect';
+import { useForm } from 'react-hook-form';
+import { Category } from 'types/category';
+import DataContext from 'state/Data.context';
 
 export type WorkoutsParams = { page?: string };
+interface FilterFormData {
+  startDate: string;
+  categories: Array<Category>;
+}
 
 const useWorkouts = () => {
+  const { register, handleSubmit } = useForm();
   const [workouts, setWorkouts] = useState<Array<Workout>>();
   const [loading, setLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
-  const { startDate, setCurrentStartDate, categories } = useContext(
-    filterContext,
-  );
   const { page = '1' } = useParams<WorkoutsParams>();
+  const { categoriesReady } = useContext(DataContext);
 
-  useDeepCompareEffectNoCheck(() => {
-    const fetch = async () => {
-      if (categories?.length) {
-        try {
-          setLoading(true);
-          setWorkouts(
-            await getWorkouts({
-              startDate: startDate,
-              category: categories.filter((c) => c.enabled).map((c) => c.name),
-              page: parseInt(page),
-            }),
-          );
-          setLoading(false);
-        } catch (error) {
-          setHasError(true);
-          setLoading(false);
-        }
-      }
-    };
-    fetch();
-  }, [page, startDate, categories]);
-
-  const onDateChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setCurrentStartDate(moment(e.target.value).format('YYYY-MM-DD'));
+  const fetchNewData = async ({ startDate, categories }: FilterFormData) => {
+    setLoading(true);
+    setWorkouts(
+      await getWorkouts({
+        startDate: startDate,
+        category: categories,
+        page: parseInt(page),
+      }),
+    );
+    setLoading(false);
   };
-  return { workouts, loading, hasError, onDateChange };
+
+  const filterSubmit = handleSubmit<FilterFormData>(fetchNewData);
+
+  useEffect(() => {
+    filterSubmit();
+    // passing `filterSubmit` in dependency array will cause infinite rerender
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, categoriesReady]);
+
+  return { workouts, register, filterSubmit, loading };
 };
 
 export default useWorkouts;

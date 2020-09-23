@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, forwardRef } from 'react';
 import styled from 'styled-components';
 import { space, color, border, layout } from 'styled-system';
 import { css } from '@styled-system/css';
@@ -20,8 +20,8 @@ const StyledInput: FC<StyledInputAtom> = styled('input')(
   layout,
 );
 
-const Input: React.FC<InputAtom> = ({ children, ...props }) => (
-  <StyledInput {...props}>{children}</StyledInput>
-);
+const Input: React.FC<InputAtom> = forwardRef((props, ref) => (
+  <StyledInput ref={ref} {...props} />
+));
 
 export default Input;

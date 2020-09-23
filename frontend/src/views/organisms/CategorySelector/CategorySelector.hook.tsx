@@ -1,29 +1,20 @@
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { getCategories } from 'api/category';
-import { filterContext } from 'state/Filters.context';
-import { CategoryEnum, CategoryUI } from 'types/category';
+import { Category } from 'types/category';
+import DataContext from 'state/Data.context';
 
 const useCategories = () => {
   const [loading, setLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const {
-    categories,
-    setCurrentCategories,
-    setCurrentStartDate,
-    startDate,
-  } = useContext(filterContext);
+  const [categories, setCategories] = useState<Category[]>();
+  const { toggleCategoriesReady } = useContext(DataContext);
 
-  useMemo(() => {
+  useEffect(() => {
     const fetch = async () => {
       try {
         setLoading(true);
-        const categories = await getCategories();
-        const categoriesUI: CategoryUI[] = categories.map((category) => {
-          const categoryUI = category as CategoryUI;
-          categoryUI.enabled = true;
-          return categoryUI;
-        });
-        setCurrentCategories(categoriesUI);
+        setCategories(await getCategories());
+        toggleCategoriesReady();
         setLoading(false);
       } catch (error) {
         setHasError(true);
@@ -31,30 +22,9 @@ const useCategories = () => {
       }
     };
     fetch();
-  }, [setCurrentCategories]);
+  }, [toggleCategoriesReady]);
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    if (categories) {
-      const triggerdCategory = e.target.value as CategoryEnum;
-      let newCategories = categories;
-      if (e.target.checked) {
-        const categoryIndex = newCategories?.findIndex(
-          (category) => category.name === triggerdCategory,
-        );
-        newCategories[categoryIndex].enabled = true;
-      } else {
-        const categoryIndex = newCategories?.findIndex(
-          (category) => category.name === triggerdCategory,
-        );
-        newCategories[categoryIndex].enabled = false;
-      }
-      setCurrentCategories(newCategories);
-      // awakard work-around as context doesn't update on shallow copy
-      setCurrentStartDate(`${startDate} `);
-    }
-  };
-
-  return { categories, loading, hasError, onChange };
+  return { categories, loading, hasError };
 };
 
 export default useCategories;

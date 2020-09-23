@@ -25,4 +25,8 @@ export interface InputAtom extends InputAtomBase {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   max?: string;
   defaultValue?: string;
+  ref?:
+    | ((instance: HTMLInputElement | null) => void)
+    | React.RefObject<HTMLInputElement>
+    | null
 }
