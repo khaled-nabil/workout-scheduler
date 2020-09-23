@@ -21,16 +21,12 @@
     "typescript": "~3.7.2",
     "use-deep-compare-effect": "^1.4.0"
   },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-      "prettier --write"
-    ]
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test:ci": "CI=true react-scripts test --env=jsdom",
+    "lint": "eslint --cache --ext .ts --ext .tsx src"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -64,7 +60,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run lint && npm run test:ci"
     }
-  }
+}
 }
