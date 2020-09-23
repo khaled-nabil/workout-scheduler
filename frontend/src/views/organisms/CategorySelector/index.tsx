@@ -17,10 +17,11 @@ const CategorySelector: FC<CategorySelectorParam> = forwardRef((_, ref) => {
       {categories?.map((category, i) => (
         <Box key={i} display="flex">
           <Checkbox
+            defaultChecked={true}
             defaultValue={category.name}
             label={category.name}
             ref={ref}
-            name={`cat-${category.name}`}
+            name='categories'
             p={3}
             mx={2}
           />
