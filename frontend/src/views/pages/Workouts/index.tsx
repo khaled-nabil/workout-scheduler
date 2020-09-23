@@ -2,16 +2,16 @@ import React from 'react';
 import { MainLayout } from 'views/templates';
 import { Row } from 'views/molecules';
 import useWorkout from './Workouts.hook';
-import { Box } from 'views/atoms';
+import { Box, Container, LoadingScreen } from 'views/atoms';
 import { InputField } from 'views/molecules';
-import moment from 'moment';
 import { CategorySelector, Pagination, WorkoutCards } from 'views/organisms';
+import moment from 'moment';
 
 const yearLaterDate = moment().add(1, 'years').format('YYYY-MM-DD');
 const currentDate = moment().format('YYYY-MM-DD');
 
 const Workouts: React.FC = () => {
-  const { workouts, register, filterSubmit } = useWorkout();
+  const { workouts, register, filterSubmit, loading } = useWorkout();
 
   return (
     <MainLayout>
@@ -39,10 +39,12 @@ const Workouts: React.FC = () => {
           </Row>
         </Row>
       </form>
-
-      <Row px={[3, null, 1]}>
-        {workouts && <WorkoutCards workouts={workouts} />}
-      </Row>
+      <Container>
+        <LoadingScreen display={loading}/>
+        <Row px={[3, null, 1]}>
+          {workouts && <WorkoutCards workouts={workouts} />}
+        </Row>
+      </Container>
       <Row justifyContent="center" mb={5} mt={3}>
         <Pagination />
       </Row>
