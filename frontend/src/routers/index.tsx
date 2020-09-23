@@ -1,18 +1,18 @@
 import React, { ReactElement } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import PublicRoutes from './public';
-import { filterContext } from 'state/Filters.context';
-import { useFilters } from 'state/Context.hook';
+import DataContext from 'state/Data.context';
+import { useData } from 'state/Context.hook';
 
 const Router = (): ReactElement => {
-  const filters = useFilters();
+  const data = useData();
 
   return (
-    <filterContext.Provider value={filters}>
+    <DataContext.Provider value={data}>
       <BrowserRouter>
         <PublicRoutes />
       </BrowserRouter>
-    </filterContext.Provider>
+    </DataContext.Provider>
   );
 };
 

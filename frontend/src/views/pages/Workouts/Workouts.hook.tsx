@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { getWorkouts } from 'api/workout';
 import { Workout } from 'types/workout';
 import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Category } from 'types/category';
+import DataContext from 'state/Data.context';
 
 export type WorkoutsParams = { page?: string };
 interface FilterFormData {
@@ -15,7 +16,8 @@ const useWorkouts = () => {
   const { register, handleSubmit } = useForm();
   const [workouts, setWorkouts] = useState<Array<Workout>>();
   const { page = '1' } = useParams<WorkoutsParams>();
- 
+  const { categoriesReady } = useContext(DataContext);
+
   const fetchNewData = async ({ startDate, categories }: FilterFormData) => {
     setWorkouts(
       await getWorkouts({
@@ -32,7 +34,7 @@ const useWorkouts = () => {
     filterSubmit()
     // passing `filterSubmit` in dependency array will cause infinite rerender
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+  }, [page, categoriesReady]);
  
   return { workouts, register, filterSubmit };
 };
