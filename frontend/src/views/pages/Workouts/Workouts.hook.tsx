@@ -1,9 +1,10 @@
-import { useState, useContext, useMemo } from 'react';
+import { useState, useContext } from 'react';
 import { getWorkouts } from 'api/workout';
 import { Workout } from 'types/workout';
 import { filterContext } from 'state/Filters.context';
 import moment from 'moment';
 import { useParams } from 'react-router-dom';
+import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect';
 
 export type WorkoutsParams = { page?: string };
 
@@ -16,9 +17,9 @@ const useWorkouts = () => {
   );
   const { page = '1' } = useParams<WorkoutsParams>();
 
-  useMemo(() => {
+  useDeepCompareEffectNoCheck(() => {
     const fetch = async () => {
-      if (categories) {
+      if (categories?.length) {
         try {
           setLoading(true);
           setWorkouts(
