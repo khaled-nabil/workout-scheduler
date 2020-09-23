@@ -16,12 +16,12 @@ const Workouts: React.FC = () => {
   return (
     <MainLayout>
       {/* TODO: Add internationalization value */}
-      <Row
-        mx={[2, null, null, null, 'auto']}
-        mb={3}
-        width={[1, null, null, null, 3 / 4, 1 / 2]}
-      >
-        <form onSubmit={filterSubmit}>
+      <form onSubmit={filterSubmit}>
+        <Row
+          mx={[2, null, null, null, 'auto']}
+          mb={3}
+          width={[1, null, null, null, 3 / 4, 1 / 2]}
+        >
           <Box>
             <InputField
               max={yearLaterDate}
@@ -37,8 +37,9 @@ const Workouts: React.FC = () => {
             <CategorySelector ref={register} />
           </Row>
           <input type="submit" />
-        </form>
-      </Row>
+        </Row>
+      </form>
+
       <Row px={[3, null, 1]}>
         {workouts && <WorkoutCards workouts={workouts} />}
       </Row>

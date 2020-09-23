@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getWorkouts } from 'api/workout';
 import { Workout } from 'types/workout';
 import { useParams } from 'react-router-dom';
@@ -15,7 +15,7 @@ const useWorkouts = () => {
   const { register, handleSubmit } = useForm();
   const [workouts, setWorkouts] = useState<Array<Workout>>();
   const { page = '1' } = useParams<WorkoutsParams>();
-
+ 
   const fetchNewData = async ({ startDate, categories }: FilterFormData) => {
     setWorkouts(
       await getWorkouts({
@@ -26,20 +26,14 @@ const useWorkouts = () => {
     );
   };
 
-  const onSubmit = (data: FilterFormData) => {
-    fetchNewData(data);
-  };
+  const filterSubmit = handleSubmit<FilterFormData>(fetchNewData);
 
-  /* useEffect(() => {
-    (async () => {
-          setWorkouts(
-            await fetchNewData()
-          );
-      })()
-    };
-  }, [page]); */
-  const filterSubmit = handleSubmit<FilterFormData>(onSubmit);
-
+  useEffect(() =>{
+    filterSubmit()
+    // passing `filterSubmit` in dependency array will cause infinite rerender
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
+ 
   return { workouts, register, filterSubmit };
 };
 

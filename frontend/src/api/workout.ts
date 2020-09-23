@@ -26,7 +26,7 @@ const getWorkouts = async ({
   category,
   page = 1,
 }: GetWorkoutsParams): Promise<Array<Workout>> => {
-  if (!category.length) {
+  if (!category?.length) {
     return [];
   }
   if (page <= 0) page = 1;
