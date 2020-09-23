@@ -2,10 +2,18 @@ import React, { FC, forwardRef, useState } from 'react';
 import { Input } from 'views/atoms';
 import { CheckboxMolecule } from './Checkbox.interface';
 import { Label } from 'views/atoms';
+import styled from 'styled-components';
+import css from '@styled-system/css';
+
+const LabelClickable = styled(Label)(
+  css({
+    cursor: 'pointer',
+  }),
+);
 
 const Checkbox: FC<CheckboxMolecule> = forwardRef(
   (
-    { label, children, ticked = false, p, mx, defaultChecked, ...props },
+    { label, p, mx, defaultChecked, ...props },
     ref,
   ) => {
     const [checked, setChecked] = useState(defaultChecked);
@@ -13,7 +21,7 @@ const Checkbox: FC<CheckboxMolecule> = forwardRef(
       setChecked(event.target.checked);
     };
     return (
-      <Label variant={checked} p={p} mx={mx}>
+      <LabelClickable variant={checked} p={p} mx={mx}>
         <Input
           defaultChecked={defaultChecked}
           display="none"
@@ -21,11 +29,9 @@ const Checkbox: FC<CheckboxMolecule> = forwardRef(
           onChange={onChange}
           ref={ref}
           {...props}
-        >
-          {children}
-        </Input>
+        />
         <span>{label}</span>
-      </Label>
+      </LabelClickable>
     );
   },
 );
