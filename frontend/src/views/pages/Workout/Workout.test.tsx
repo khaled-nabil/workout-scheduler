@@ -3,12 +3,12 @@ import { shallow } from 'enzyme';
 import { mocked } from 'ts-jest/utils';
 import Workout from './';
 import { Workout as WorkoutType } from 'types/workout';
-import useWorkoutActual from './Workout.hook';
+import useWorkout from './Workout.hook';
 import toJson from 'enzyme-to-json';
 
 jest.mock('./Workout.hook');
 
-const useWorkout = mocked(useWorkoutActual, true);
+const mockedUseWorkout = mocked(useWorkout, true);
 
 const workoutData: WorkoutType = {
   _id: '123',
@@ -16,7 +16,7 @@ const workoutData: WorkoutType = {
   description: 'Eu laborum duis reprehenderit minim.',
   category: 'c1',
   picture: 'http://placehold.it/200x200',
-  startDate: new Date(),
+  startDate: new Date('2020-09-22'),
 };
 
 const useWorkoutResponse = (workout?: WorkoutType) => ({
@@ -27,7 +27,7 @@ const useWorkoutResponse = (workout?: WorkoutType) => ({
 
 describe('Workout', () => {
   it('Should display workout details when workout date exists', () => {
-    useWorkout.mockReturnValueOnce(useWorkoutResponse(workoutData));
+    mockedUseWorkout.mockReturnValueOnce(useWorkoutResponse(workoutData));
     const component = shallow(<Workout />);
     const Image = component.find('Image');
     expect(Image).toHaveLength(1);
@@ -37,7 +37,7 @@ describe('Workout', () => {
     expect(toJson(component)).toMatchSnapshot();
   });
   it('Should display only back button when no workout passed', () => {
-    useWorkout.mockReturnValueOnce(useWorkoutResponse());
+    mockedUseWorkout.mockReturnValueOnce(useWorkoutResponse());
     const component = shallow(<Workout />);
     const Image = component.find('Image');
     expect(Image.exists()).toBeFalsy();
